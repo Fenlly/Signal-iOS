@@ -431,7 +431,10 @@ static NSString *const kURLHostVerifyPrefix             = @"verify";
         }
         [dataSource setSourceFilename:filename];
 
-        SignalAttachment *attachment = [SignalAttachment attachmentWithDataSource:dataSource dataUTI:utiType];
+        // "Import with Signal" attachments _SHOULD_ be resized, if possible.
+        SignalAttachment *attachment = [SignalAttachment attachmentWithDataSource:dataSource
+                                                                          dataUTI:utiType
+                                                                attachmentQuality:TSAttachmentQualityCompact];
         if (!attachment) {
             DDLogError(@"Application opened with URL with invalid content: %@", url);
             [OWSAlerts showAlertWithTitle:
